@@ -1,0 +1,15 @@
+{
+  "dataset": "sales_events",
+  "version": "1.0",
+  "columns": {
+    "order_id":    {"type": "string",   "nullable": false},
+    "event_time":  {"type": "datetime", "nullable": false},
+    "updated_at":  {"type": "datetime", "nullable": false},
+    "op":          {"type": "string",   "nullable": true},
+    "amount":      {"type": "float",    "nullable": false, "min": 0},
+    "product_id":  {"type": "float",    "nullable": false},
+    "store_id":    {"type": "string",   "nullable": false}
+  },
+  "primary_key": "order_id",
+  "watermark_col": "updated_at"
+}
