@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
-sys.path.insert(0, str(Path(__file__).parent / "src" / "steps"))
+sys.path.insert(0, sp(Path(__file__).parent / "src" / "steps"))
 
 from steps.step01_ingest_bronze            import ingest_bronze
 from steps.step02_build_silver_incremental import build_silver
