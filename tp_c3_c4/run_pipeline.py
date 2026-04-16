@@ -1,9 +1,8 @@
 import argparse, json, os, sys, time, uuid, traceback
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
-sys.path.insert(0, sp(Path(__file__).parent / "src" / "steps"))
 
 from steps.step01_ingest_bronze            import ingest_bronze
 from steps.step02_build_silver_incremental import build_silver
@@ -18,7 +17,7 @@ def log_run(run_id, step, status, metrics, duration):
     LOGS_FILE.parent.mkdir(parents=True, exist_ok=True)
     entry = {
         "run_id":           run_id,
-        "timestamp":        datetime.utcnow().isoformat(),
+        "timestamp":        datetime.now(timezone.utc).isoformat(),
         "step":             step,
         "status":           status,
         "duration_sec":     round(duration, 3),
