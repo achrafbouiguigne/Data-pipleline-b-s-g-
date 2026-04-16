@@ -1,9 +1,8 @@
 import argparse, json, os, sys, time, uuid, traceback
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
-sys.path.insert(0, str(Path(__file__).parent / "src" / "steps"))
 
 from steps.step01_ingest_bronze            import ingest_bronze
 from steps.step02_build_silver_incremental import build_silver
@@ -18,7 +17,7 @@ def log_run(run_id, step, status, metrics, duration):
     LOGS_FILE.parent.mkdir(parents=True, exist_ok=True)
     entry = {
         "run_id":           run_id,
-        "timestamp":        datetime.utcnow().isoformat(),
+        "timestamp":        datetime.now(timezone.utc).isoformat(),
         "step":             step,
         "status":           status,
         "duration_sec":     round(duration, 3),
@@ -44,7 +43,8 @@ def with_retry(fn, retries=3, backoff=1):
             time.sleep(wait)
 
 
-def run_single(run_date, run_id, lookback=2):
+def run_single(run_date, run_id, lookback=2, dry_run=False):
+    t_start = time.time()
     print(f"\n{'='*55}")
     print(f"Pipeline run_date={run_date}  run_id={run_id}")
     print(f"{'='*55}")
@@ -55,6 +55,11 @@ def run_single(run_date, run_id, lookback=2):
         ("build_gold",     lambda: build_gold()),
         ("publish_sqlite", lambda: publish()),
     ]
+    if dry_run:
+        print("DRY RUN — steps that would execute:")
+        for name, _ in steps:
+            print(f"  - {name}")
+        return True
     for name, fn in steps:
         t0 = time.time()
         try:
@@ -64,6 +69,8 @@ def run_single(run_date, run_id, lookback=2):
             log_run(run_id, name, "FAIL", {}, time.time() - t0)
             traceback.print_exc()
             return False
+    total = round(time.time() - t_start, 2)
+    print(f"\nPipeline terminé — {len(steps)} steps en {total}s")
     print("\nPipeline termine avec succes!")
     return True
 
@@ -78,6 +85,8 @@ def run_backfill(start, end, lookback=2):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true",
+                    help="Print planned steps without executing")
     parser.add_argument("--run-date", default=str(date.today()))
     parser.add_argument("--mode", default="incremental",
                         choices=["incremental", "backfill"])
@@ -87,9 +96,12 @@ def main():
     args = parser.parse_args()
     os.chdir(Path(__file__).parent)
     if args.mode == "backfill":
-        run_backfill(args.backfill_start, args.backfill_end, args.lookback_days)
+        ok = run_backfill(args.backfill_start, args.backfill_end,
+                          args.lookback_days, args.dry_run)
     else:
-        run_single(args.run_date, str(uuid.uuid4())[:8], args.lookback_days)
+        ok = run_single(args.run_date, str(uuid.uuid4())[:8],
+                        args.lookback_days, args.dry_run)
+    sys.exit(0 if ok else 1)
 
 
 if __name__ == "__main__":

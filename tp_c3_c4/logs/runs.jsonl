@@ -18,3 +18,15 @@
 {"run_id": "e5cd368b", "timestamp": "2026-03-19T22:30:39.427665", "step": "quality_gate", "status": "SUCCESS", "duration_sec": 0.473, "rows_read": 0, "rows_written": 0, "rows_quarantined": 0}
 {"run_id": "e5cd368b", "timestamp": "2026-03-19T22:30:39.935672", "step": "build_gold", "status": "SUCCESS", "duration_sec": 0.506, "rows_read": 0, "rows_written": 1881, "rows_quarantined": 0}
 {"run_id": "e5cd368b", "timestamp": "2026-03-19T22:30:40.043667", "step": "publish_sqlite", "status": "SUCCESS", "duration_sec": 0.104, "rows_read": 0, "rows_written": 0, "rows_quarantined": 0}
+{"run_id": "96b95555", "timestamp": "2026-04-16T12:22:42.365302", "step": "ingest_bronze", "status": "SUCCESS", "duration_sec": 0.219, "rows_read": 0, "rows_written": 53347, "rows_quarantined": 0}
+{"run_id": "96b95555", "timestamp": "2026-04-16T12:22:49.771369", "step": "build_silver", "status": "FAIL", "duration_sec": 7.336, "rows_read": 0, "rows_written": 0, "rows_quarantined": 0}
+{"run_id": "e6b2ca87", "timestamp": "2026-04-16T12:23:45.709584", "step": "ingest_bronze", "status": "SUCCESS", "duration_sec": 0.073, "rows_read": 0, "rows_written": 53347, "rows_quarantined": 0}
+{"run_id": "e6b2ca87", "timestamp": "2026-04-16T12:23:47.659758", "step": "build_silver", "status": "SUCCESS", "duration_sec": 1.92, "rows_read": 213388, "rows_written": 0, "rows_quarantined": 0}
+{"run_id": "e6b2ca87", "timestamp": "2026-04-16T12:23:50.256636", "step": "quality_gate", "status": "SUCCESS", "duration_sec": 2.595, "rows_read": 0, "rows_written": 0, "rows_quarantined": 0}
+{"run_id": "e6b2ca87", "timestamp": "2026-04-16T12:23:50.966043", "step": "build_gold", "status": "SUCCESS", "duration_sec": 0.707, "rows_read": 0, "rows_written": 1881, "rows_quarantined": 0}
+{"run_id": "e6b2ca87", "timestamp": "2026-04-16T12:23:51.184274", "step": "publish_sqlite", "status": "SUCCESS", "duration_sec": 0.217, "rows_read": 0, "rows_written": 0, "rows_quarantined": 0}
+{"run_id": "e9358e45", "timestamp": "2026-04-16T12:26:43.008870", "step": "ingest_bronze", "status": "SUCCESS", "duration_sec": 0.074, "rows_read": 0, "rows_written": 53347, "rows_quarantined": 0}
+{"run_id": "e9358e45", "timestamp": "2026-04-16T12:26:44.501330", "step": "build_silver", "status": "SUCCESS", "duration_sec": 1.491, "rows_read": 213388, "rows_written": 0, "rows_quarantined": 0}
+{"run_id": "e9358e45", "timestamp": "2026-04-16T12:26:45.187583", "step": "quality_gate", "status": "SUCCESS", "duration_sec": 0.685, "rows_read": 0, "rows_written": 0, "rows_quarantined": 0}
+{"run_id": "e9358e45", "timestamp": "2026-04-16T12:26:45.902600", "step": "build_gold", "status": "SUCCESS", "duration_sec": 0.692, "rows_read": 0, "rows_written": 1881, "rows_quarantined": 0}
+{"run_id": "e9358e45", "timestamp": "2026-04-16T12:26:46.048652", "step": "publish_sqlite", "status": "SUCCESS", "duration_sec": 0.144, "rows_read": 0, "rows_written": 0, "rows_quarantined": 0}
