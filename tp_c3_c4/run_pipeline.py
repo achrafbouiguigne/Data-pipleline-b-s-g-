@@ -43,7 +43,7 @@ def with_retry(fn, retries=3, backoff=1):
             time.sleep(wait)
 
 
-def run_single(run_date, run_id, lookback=2):
+def run_single(run_date, run_id, lookback=2, dry_run=False):
     print(f"\n{'='*55}")
     print(f"Pipeline run_date={run_date}  run_id={run_id}")
     print(f"{'='*55}")
@@ -54,6 +54,11 @@ def run_single(run_date, run_id, lookback=2):
         ("build_gold",     lambda: build_gold()),
         ("publish_sqlite", lambda: publish()),
     ]
+    if dry_run:
+        print("DRY RUN — steps that would execute:")
+        for name, _ in steps:
+            print(f"  - {name}")
+        return True
     for name, fn in steps:
         t0 = time.time()
         try:
@@ -77,6 +82,8 @@ def run_backfill(start, end, lookback=2):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true",
+                    help="Print planned steps without executing")
     parser.add_argument("--run-date", default=str(date.today()))
     parser.add_argument("--mode", default="incremental",
                         choices=["incremental", "backfill"])
