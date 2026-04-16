@@ -93,9 +93,12 @@ def main():
     args = parser.parse_args()
     os.chdir(Path(__file__).parent)
     if args.mode == "backfill":
-        run_backfill(args.backfill_start, args.backfill_end, args.lookback_days)
+        ok = run_backfill(args.backfill_start, args.backfill_end,
+                          args.lookback_days, args.dry_run)
     else:
-        run_single(args.run_date, str(uuid.uuid4())[:8], args.lookback_days)
+        ok = run_single(args.run_date, str(uuid.uuid4())[:8],
+                        args.lookback_days, args.dry_run)
+    sys.exit(0 if ok else 1)
 
 
 if __name__ == "__main__":
