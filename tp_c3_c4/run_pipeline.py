@@ -44,6 +44,7 @@ def with_retry(fn, retries=3, backoff=1):
 
 
 def run_single(run_date, run_id, lookback=2, dry_run=False):
+    t_start = time.time()
     print(f"\n{'='*55}")
     print(f"Pipeline run_date={run_date}  run_id={run_id}")
     print(f"{'='*55}")
@@ -68,6 +69,8 @@ def run_single(run_date, run_id, lookback=2, dry_run=False):
             log_run(run_id, name, "FAIL", {}, time.time() - t0)
             traceback.print_exc()
             return False
+    total = round(time.time() - t_start, 2)
+    print(f"\nPipeline terminé — {len(steps)} steps en {total}s")
     print("\nPipeline termine avec succes!")
     return True
 
